@@ -1,0 +1,136 @@
+﻿@model MonitoringWeb.Models.MeteringDataRegistrationModel
+
+@{
+    ViewBag.Title = "Регистрация показаний";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts
+{
+    <link href="@Url.Content("~/Content/bootstrap-datetimepicker.min.css")" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/moment-with-locales.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datetimepicker.min.js")"></script>
+}
+
+<div class="jumbotron">
+    <h2>Регистрация показаний</h2>
+</div>
+
+<div class="row">
+
+    @if (ViewBag.ResultMessage != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @Html.Raw(ViewBag.ResultMessage)
+        </div>
+    }
+    else
+    {
+
+        using (Html.BeginForm("Registration", "MeteringData", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.PointId)
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Точка учета</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringPointStreet)
+                                @if (Model.PointId.HasValue)
+                                {
+                                    @Html.DisplayFor(m => m.MeteringPointStreet, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(m => m.MeteringPointStreet)
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(m => m.MeteringPointStreet, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.MeteringPointStreet, "", new { @class = "form-text text-muted" })
+                                }
+
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringPointHouse)
+                                @if (Model.PointId.HasValue)
+                                {
+                                    @Html.DisplayFor(m => m.MeteringPointHouse, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(m => m.MeteringPointHouse)
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(m => m.MeteringPointHouse, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.MeteringPointHouse, "", new { @class = "form-text text-muted" })
+                                }
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringPointFlat)
+                                @if (Model.PointId.HasValue)
+                                {
+                                    @Html.DisplayFor(m => m.MeteringPointFlat, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(m => m.MeteringPointFlat)
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(m => m.MeteringPointFlat, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.MeteringPointFlat, "", new { @class = "form-text text-muted" })
+                                }
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringPointOwner)
+                                @if (Model.PointId.HasValue)
+                                {
+                                    @Html.DisplayFor(m => m.MeteringPointOwner, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.HiddenFor(m => m.MeteringPointOwner)
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(m => m.MeteringPointOwner, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.MeteringPointOwner, "", new { @class = "form-text text-muted" })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Показания для регистрации</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringDataCheckedAt)
+                                <div class='input-group date' id='datetimepicker@{@Html.NameFor(m => m.MeteringDataCheckedAt)}'>
+                                    <div style="display: flex; justify-content: flex-end">
+                                        @Html.EditorFor(m => m.MeteringDataCheckedAt, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div style="width:50px;" class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker@{@Html.NameFor(m => m.MeteringDataCheckedAt)}').datetimepicker({
+                                        locale: 'ru'
+                                    });
+                                });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringDataValue)
+                                @Html.EditorFor(m => m.MeteringDataValue, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.MeteringDataValue, "", new { @class = "form-text text-muted" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Отправить" />
+        }
+    }
+</div>
+

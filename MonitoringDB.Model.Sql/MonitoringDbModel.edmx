@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MonitoringDbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MonitoringDbModelStoreContainer">
+    <EntitySet Name="MeteringDevices" EntityType="MonitoringDbModel.Store.MeteringDevices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeteringPoints" EntityType="MonitoringDbModel.Store.MeteringPoints" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeteringDataHistory" EntityType="MonitoringDbModel.Store.MeteringDataHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeteringDeviceHistory" EntityType="MonitoringDbModel.Store.MeteringDeviceHistory" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="MeteringDataMeteringPoint" Association="MonitoringDbModel.Store.MeteringDataMeteringPoint">
+      <End Role="MeteringData" EntitySet="MeteringDataHistory" />
+      <End Role="MeteringPoint" EntitySet="MeteringPoints" />
+    </AssociationSet>
+    <AssociationSet Name="MeteringDeviceInfoMeteringDevice" Association="MonitoringDbModel.Store.MeteringDeviceInfoMeteringDevice">
+      <End Role="MeteringDeviceInfo" EntitySet="MeteringDeviceHistory" />
+      <End Role="MeteringDevice" EntitySet="MeteringDevices" />
+    </AssociationSet>
+    <AssociationSet Name="MeteringDeviceInfoMeteringPoint" Association="MonitoringDbModel.Store.MeteringDeviceInfoMeteringPoint">
+      <End Role="MeteringDeviceInfo" EntitySet="MeteringDeviceHistory" />
+      <End Role="MeteringPoint" EntitySet="MeteringPoints" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="MeteringDevices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeviceType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SerialNo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CheckDate" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="MeteringPoints">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Street" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="House" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Flat" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Owner" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MeteringDataHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PointId" Type="bigint" Nullable="false" />
+    <Property Name="CheckedAt" Type="datetime" Nullable="false" />
+    <Property Name="Value" Type="real" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MeteringDeviceHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MountedAt" Type="datetime" Nullable="false" />
+    <Property Name="DemountedAt" Type="datetime" Nullable="true" />
+    <Property Name="DeviceId" Type="bigint" Nullable="false" />
+    <Property Name="PointId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="MeteringDataMeteringPoint">
+    <End Role="MeteringData" Type="MonitoringDbModel.Store.MeteringDataHistory" Multiplicity="*" />
+    <End Role="MeteringPoint" Type="MonitoringDbModel.Store.MeteringPoints" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="MeteringPoint">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MeteringData">
+        <PropertyRef Name="PointId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MeteringDeviceInfoMeteringDevice">
+    <End Role="MeteringDeviceInfo" Type="MonitoringDbModel.Store.MeteringDeviceHistory" Multiplicity="*" />
+    <End Role="MeteringDevice" Type="MonitoringDbModel.Store.MeteringDevices" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="MeteringDevice">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MeteringDeviceInfo">
+        <PropertyRef Name="DeviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MeteringDeviceInfoMeteringPoint">
+    <End Role="MeteringDeviceInfo" Type="MonitoringDbModel.Store.MeteringDeviceHistory" Multiplicity="*" />
+    <End Role="MeteringPoint" Type="MonitoringDbModel.Store.MeteringPoints" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="MeteringPoint">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MeteringDeviceInfo">
+        <PropertyRef Name="PointId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MonitoringDbModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MonitoringDbModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MeteringDevices" EntityType="MonitoringDbModel.MeteringDevice" />
+          <EntitySet Name="MeteringPoints" EntityType="MonitoringDbModel.MeteringPoint" />
+          <EntitySet Name="MeteringDataHistory" EntityType="MonitoringDbModel.MeteringData" />
+          <AssociationSet Name="MeteringDataMeteringPoint" Association="MonitoringDbModel.MeteringDataMeteringPoint">
+            <End Role="MeteringData" EntitySet="MeteringDataHistory" />
+            <End Role="MeteringPoint" EntitySet="MeteringPoints" />
+          </AssociationSet>
+          <EntitySet Name="MeteringDeviceHistory" EntityType="MonitoringDbModel.MeteringDeviceInfo" />
+          <AssociationSet Name="MeteringDeviceInfoMeteringDevice" Association="MonitoringDbModel.MeteringDeviceInfoMeteringDevice">
+            <End Role="MeteringDeviceInfo" EntitySet="MeteringDeviceHistory" />
+            <End Role="MeteringDevice" EntitySet="MeteringDevices" />
+          </AssociationSet>
+          <AssociationSet Name="MeteringDeviceInfoMeteringPoint" Association="MonitoringDbModel.MeteringDeviceInfoMeteringPoint">
+            <End Role="MeteringDeviceInfo" EntitySet="MeteringDeviceHistory" />
+            <End Role="MeteringPoint" EntitySet="MeteringPoints" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="MeteringDevice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceType" Type="String" Nullable="false" />
+          <Property Name="SerialNo" Type="String" Nullable="false" />
+          <Property Name="CheckDate" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="MeteringDeviceInfo" Relationship="MonitoringDbModel.MeteringDeviceInfoMeteringDevice" FromRole="MeteringDevice" ToRole="MeteringDeviceInfo" />
+        </EntityType>
+        <EntityType Name="MeteringPoint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Street" Type="String" Nullable="false" />
+          <Property Name="House" Type="String" Nullable="false" />
+          <Property Name="Flat" Type="String" Nullable="true" />
+          <Property Name="Owner" Type="String" Nullable="false" />
+          <NavigationProperty Name="MeteringDataHistory" Relationship="MonitoringDbModel.MeteringDataMeteringPoint" FromRole="MeteringPoint" ToRole="MeteringData" />
+          <NavigationProperty Name="MeteringDeviceHistory" Relationship="MonitoringDbModel.MeteringDeviceInfoMeteringPoint" FromRole="MeteringPoint" ToRole="MeteringDeviceInfo" />
+        </EntityType>
+        <EntityType Name="MeteringData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="MeteringPoint" Relationship="MonitoringDbModel.MeteringDataMeteringPoint" FromRole="MeteringData" ToRole="MeteringPoint" />
+          <Property Name="PointId" Type="Int64" Nullable="false" />
+          <Property Name="CheckedAt" Type="DateTime" Nullable="false" />
+          <Property Name="Value" Type="Single" Nullable="false" />
+        </EntityType>
+        <Association Name="MeteringDataMeteringPoint">
+          <End Type="MonitoringDbModel.MeteringData" Role="MeteringData" Multiplicity="*" />
+          <End Type="MonitoringDbModel.MeteringPoint" Role="MeteringPoint" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="MeteringPoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MeteringData">
+              <PropertyRef Name="PointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MeteringDeviceInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MountedAt" Type="DateTime" Nullable="false" />
+          <Property Name="DemountedAt" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="MeteringDevice" Relationship="MonitoringDbModel.MeteringDeviceInfoMeteringDevice" FromRole="MeteringDeviceInfo" ToRole="MeteringDevice" />
+          <Property Name="DeviceId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="MeteringPoint" Relationship="MonitoringDbModel.MeteringDeviceInfoMeteringPoint" FromRole="MeteringDeviceInfo" ToRole="MeteringPoint" />
+          <Property Name="PointId" Type="Int64" Nullable="false" />
+        </EntityType>
+        <Association Name="MeteringDeviceInfoMeteringDevice">
+          <End Type="MonitoringDbModel.MeteringDeviceInfo" Role="MeteringDeviceInfo" Multiplicity="*" />
+          <End Type="MonitoringDbModel.MeteringDevice" Role="MeteringDevice" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="MeteringDevice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MeteringDeviceInfo">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MeteringDeviceInfoMeteringPoint">
+          <End Type="MonitoringDbModel.MeteringDeviceInfo" Role="MeteringDeviceInfo" Multiplicity="*" />
+          <End Type="MonitoringDbModel.MeteringPoint" Role="MeteringPoint" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="MeteringPoint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MeteringDeviceInfo">
+              <PropertyRef Name="PointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MonitoringDbModelStoreContainer" CdmEntityContainer="MonitoringDbModelContainer">
+    <EntitySetMapping Name="MeteringDevices">
+      <EntityTypeMapping TypeName="IsTypeOf(MonitoringDbModel.MeteringDevice)">
+        <MappingFragment StoreEntitySet="MeteringDevices">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
+          <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+          <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MeteringPoints">
+      <EntityTypeMapping TypeName="IsTypeOf(MonitoringDbModel.MeteringPoint)">
+        <MappingFragment StoreEntitySet="MeteringPoints">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="House" ColumnName="House" />
+          <ScalarProperty Name="Flat" ColumnName="Flat" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MeteringDataHistory">
+      <EntityTypeMapping TypeName="IsTypeOf(MonitoringDbModel.MeteringData)">
+        <MappingFragment StoreEntitySet="MeteringDataHistory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PointId" ColumnName="PointId" />
+          <ScalarProperty Name="CheckedAt" ColumnName="CheckedAt" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MeteringDeviceHistory">
+      <EntityTypeMapping TypeName="IsTypeOf(MonitoringDbModel.MeteringDeviceInfo)">
+        <MappingFragment StoreEntitySet="MeteringDeviceHistory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MountedAt" ColumnName="MountedAt" />
+          <ScalarProperty Name="DemountedAt" ColumnName="DemountedAt" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+          <ScalarProperty Name="PointId" ColumnName="PointId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,186 @@
+﻿@model MonitoringWeb.Models.MeteringDeviceMountingModel
+
+@{
+    ViewBag.Title = "Монтаж счетчика";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts
+{
+    <link href="@Url.Content("~/Content/bootstrap-datetimepicker.min.css")" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/moment-with-locales.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-datetimepicker.min.js")"></script>
+}
+
+<div class="jumbotron">
+    <h2>Монтаж счетчика</h2>
+</div>
+
+<div class="row">
+
+    @if (ViewBag.ResultMessage != null)
+    {
+     <div class="alert alert-success" role="alert">
+        @Html.Raw(ViewBag.ResultMessage)
+     </div>
+    }
+    else
+    {
+
+        using (Html.BeginForm("Mount", "MeteringDevices", FormMethod.Post))
+        {
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Точка учета</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringPointStreet)
+                                @Html.EditorFor(m => m.MeteringPointStreet, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.MeteringPointStreet, "", new { @class = "form-text text-muted" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringPointHouse)
+                                @Html.EditorFor(m => m.MeteringPointHouse, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.MeteringPointHouse, "", new { @class = "form-text text-muted" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringPointFlat)
+                                @Html.EditorFor(m => m.MeteringPointFlat, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.MeteringPointFlat, "", new { @class = "form-text text-muted" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringPointOwner)
+                                @Html.EditorFor(m => m.MeteringPointOwner, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.MeteringPointOwner, "", new { @class = "form-text text-muted" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Прибор учета</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DeviceType)
+                                @Html.EditorFor(m => m.DeviceType, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.DeviceType, "", new { @class = "form-text text-muted" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DeviceSerialNo)
+                                @Html.EditorFor(m => m.DeviceSerialNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.DeviceSerialNo, "", new { @class = "form-text text-muted" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MountedAt)
+                                @*@Html.EditorFor(m => m.MountedAt, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.MountedAt, "", new { @class = "form-text text-muted" })*@
+                                <div class='input-group date' id='datetimepicker@{@Html.NameFor(m => m.MountedAt)}'>
+                                    <div style="display: flex; justify-content: flex-end">
+                                        @Html.EditorFor(m => m.MountedAt, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div style="width:50px;" class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker@{@Html.NameFor(m => m.MountedAt)}').datetimepicker({
+                                        locale: 'ru'
+                                    });
+                                });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DemountedAt)
+                                @*@Html.EditorFor(m => m.DemountedAt, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.DemountedAt, "", new { @class = "form-text text-muted" })*@
+                                <div class='input-group date' id='datetimepicker@{@Html.NameFor(m => m.DemountedAt)}'>
+                                    <div style="display: flex; justify-content: flex-end">
+                                        @Html.EditorFor(m => m.DemountedAt, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div style="width:50px;" class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker@{@Html.NameFor(m => m.DemountedAt)}').datetimepicker({
+                                        locale: 'ru'
+                                    });
+                                });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DeviceCheckDate)
+                                @*@Html.EditorFor(m => m.DeviceCheckDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.DeviceCheckDate, "", new { @class = "form-text text-muted" })*@
+                                <div class='input-group date' id='datetimepicker@{@Html.NameFor(m => m.DeviceCheckDate)}'>
+                                    <div style="display: flex; justify-content: flex-end">
+                                        @Html.EditorFor(m => m.DeviceCheckDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div style="width:50px;" class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker@{@Html.NameFor(m => m.DeviceCheckDate)}').datetimepicker({
+                                        locale: 'ru',
+                                        format: 'DD/MM/YYYY'
+                                    });
+                                });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="submit" class="btn btn-primary" value="Отправить" />
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Начальные показания</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringDataCheckedAt)
+                                @*@Html.EditorFor(m => m.MeteringDataCheckedAt, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.MeteringDataCheckedAt, "", new { @class = "form-text text-muted" })*@
+                                <div class='input-group date' id='datetimepicker@{@Html.NameFor(m => m.MeteringDataCheckedAt)}'>
+                                    <div style="display: flex; justify-content: flex-end">
+                                        @Html.EditorFor(m => m.MeteringDataCheckedAt, new { htmlAttributes = new { @class = "form-control" } })
+                                        <div style="width:50px;" class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker@{@Html.NameFor(m => m.MeteringDataCheckedAt)}').datetimepicker({
+                                        locale: 'ru'
+                                    });
+                                });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.MeteringDataValue)
+                                @Html.EditorFor(m => m.MeteringDataValue, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.MeteringDataValue, "", new { @class = "form-text text-muted" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

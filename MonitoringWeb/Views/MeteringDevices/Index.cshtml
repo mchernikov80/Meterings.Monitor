@@ -1,0 +1,48 @@
+﻿@model MonitoringWeb.Models.MeteringDevicesModel
+
+@{
+    ViewBag.Title = "Счетчики";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h2>Счетчики</h2>
+</div>
+<div class="row">
+    <div class="col-md-7">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">@Html.LabelFor(m => m.DevicesForCheckFilter)</h2>
+            </div>
+            <div class="panel-body">
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        @Html.LabelFor(m => m.DevicesForCheckFilter.Days)
+                        @Html.EditorFor(m => m.DevicesForCheckFilter.Days, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="form-group col-md-5">
+                        @Html.LabelFor(m => m.DevicesForCheckFilter.House)
+                        @Html.EditorFor(m => m.DevicesForCheckFilter.House, new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>
+                    
+                </div>
+                <div class="form-row">
+                    <input class="btn btn-primary" value="Обновить" onclick="location.href='@Url.Action("Index", "MeteringDevices")?days='+$('#@Html.IdFor(m => m.DevicesForCheckFilter.Days)').val()+'&house='+$('#@Html.IdFor(m => m.DevicesForCheckFilter.House)').val()" />
+                </div>
+                </div>
+            </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">@Html.LabelFor(m => m.MeteringDevices)</h2>
+            </div>
+            <div class="panel-body">
+                @Html.Partial("_MeteringDevicesList", @Model.MeteringDevices)
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ec936f8e8dbd45c7a84acd174ea1a32d" Name="Diagram1" >
+        <EntityTypeShape EntityType="MonitoringDbModel.MeteringDevice" Width="1.5" PointX="1.125" PointY="4.75" />
+        <EntityTypeShape EntityType="MonitoringDbModel.MeteringPoint" Width="1.5" PointX="2.25" PointY="1.375" />
+        <EntityTypeShape EntityType="MonitoringDbModel.MeteringData" Width="1.5" PointX="7" PointY="1.5" />
+        <AssociationConnector Association="MonitoringDbModel.MeteringDataMeteringPoint" />
+        <EntityTypeShape EntityType="MonitoringDbModel.MeteringDeviceInfo" Width="2.25" PointX="7" PointY="4.25" />
+        <AssociationConnector Association="MonitoringDbModel.MeteringDeviceInfoMeteringDevice" />
+        <AssociationConnector Association="MonitoringDbModel.MeteringDeviceInfoMeteringPoint" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

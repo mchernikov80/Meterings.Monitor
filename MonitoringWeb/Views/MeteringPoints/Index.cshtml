@@ -1,0 +1,24 @@
+﻿@model IList<MonitoringWeb.Models.MeteringPointModel>
+
+@{
+    ViewBag.Title = "Точки учета";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h2>Точки учета</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Точки учета</h2>
+            </div>
+            <div class="panel-body">
+                @Html.Partial("_MeteringPointsList", @Model)
+            </div>
+        </div>
+    </div>
+
+</div>

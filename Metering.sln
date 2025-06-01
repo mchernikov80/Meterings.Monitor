@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitoringWeb", "MonitoringWeb\MonitoringWeb.csproj", "{3738A084-AF07-4D42-93EA-0EEBB0CAD6AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitoringDB.Model.Sql", "MonitoringDB.Model.Sql\MonitoringDB.Model.Sql.csproj", "{4C1736A8-2447-4B20-929B-D12254D24872}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3738A084-AF07-4D42-93EA-0EEBB0CAD6AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3738A084-AF07-4D42-93EA-0EEBB0CAD6AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3738A084-AF07-4D42-93EA-0EEBB0CAD6AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3738A084-AF07-4D42-93EA-0EEBB0CAD6AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C1736A8-2447-4B20-929B-D12254D24872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1736A8-2447-4B20-929B-D12254D24872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1736A8-2447-4B20-929B-D12254D24872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1736A8-2447-4B20-929B-D12254D24872}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17F280C8-3A63-47BE-AD0B-F7CA49E50349}
+	EndGlobalSection
+EndGlobal
